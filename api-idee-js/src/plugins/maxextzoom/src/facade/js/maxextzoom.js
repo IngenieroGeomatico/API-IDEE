@@ -4,6 +4,9 @@
 import 'assets/css/maxextzoom';
 import MaxExtZoomControl from './maxextzoomcontrol';
 import api from '../../api';
+import { getValue } from './i18n/language';
+import en from './i18n/en';
+import es from './i18n/es';
 
 export default class MaxExtZoom extends IDEE.Plugin {
   /**
@@ -63,7 +66,7 @@ export default class MaxExtZoom extends IDEE.Plugin {
       collapsible: false,
       position: IDEE.ui.position[this.position],
       className: 'm-maxextzoom',
-      tooltip: 'Zoom a la extensión del mapa',
+      tooltip: getValue('tooltip'),
     });
     this.panel_.addControls(this.controls_);
     map.addPanels(this.panel_);
@@ -97,5 +100,20 @@ export default class MaxExtZoom extends IDEE.Plugin {
    */
   get name() {
     return 'maxextzoom';
+  }
+
+  /**
+   * Return plugin language
+   *
+   * @public
+   * @function
+   * @param {string} lang type language
+   * @api stable
+   */
+  static getJSONTranslations(lang) {
+    if (lang === 'en' || lang === 'es') {
+      return (lang === 'en') ? en : es;
+    }
+    return IDEE.language.getTranslation(lang).maxextzoom;
   }
 }
